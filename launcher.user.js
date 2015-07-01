@@ -2,7 +2,7 @@
 // @name        Launcher
 // @namespace   AposLauncher
 // @include     http://agar.io/
-// @version     2.85
+// @version     2.82
 // @grant       none
 // @author      http://www.twitch.tv/apostolique
 // ==/UserScript==
@@ -60,10 +60,6 @@ console.log("Running Bot Launcher!");
             window.refreshTwitch();
         }
     }
-    if (81 == e.keyCode) {
-        console.log("ToggleFollowMouse");
-        toggleFollow = !toggleFollow;
-    }
   }
 
   function humanPlayer() {
@@ -79,8 +75,6 @@ console.log("Running Bot Launcher!");
         window.jQuery('#locationUnknown').append(window.jQuery('<select id="bList" class="form-control" onchange="setBotIndex($(this).val());" />'));
         window.jQuery('#locationUnknown').addClass('form-group');
     }
-
-    window.jQuery('#nick').val(originalName);
 
     window.botList.push(["Human", humanPlayer]);
 
@@ -119,16 +113,13 @@ console.log("Running Bot Launcher!");
     b = !1,
     c = !1;
     h.onkeydown = function (d) {
-      //UPDATE
-      if (!window.jQuery('#nick').is(":focus")) {
-        32 != d.keyCode || a || (K(), C(17), a = !0);
-        81 != d.keyCode || b || (C(18), b = !0);
-        87 != d.keyCode || c || (K(), C(21), c = !0);
-        27 == d.keyCode && Ca(!0);
+      32 != d.keyCode || a || (K(), C(17), a = !0);
+      81 != d.keyCode || b || (C(18), b = !0);
+      87 != d.keyCode || c || (K(), C(21), c = !0);
+      27 == d.keyCode && Ca(!0);
 
-        //UPDATE
-        keyAction(d);
-      }
+      //UPDATE
+      keyAction(d);
     };
     h.onkeyup = function (d) {
       32 == d.keyCode && (a = !1);
@@ -631,7 +622,7 @@ console.log("Running Bot Launcher!");
     for (d = 0; d < u.length; d++) u[d].T();
     //UPDATE
     if (getPlayer().length > 0) {
-        var moveLoc = window.botList[botIndex][1](toggleFollow);
+        var moveLoc = window.botList[botIndex][1]();
         if (!toggle) {
             setPoint(moveLoc[0], moveLoc[1]);
         }
@@ -821,17 +812,13 @@ console.log("Running Bot Launcher!");
     bestTime = Math.max(nbSeconds, bestTime);
 
     var debugStrings = [];
-    debugStrings.push("Current Bot: " + window.botList[botIndex][0]);
     debugStrings.push("T - Bot: " + (!toggle ? "On" : "Off"));
     debugStrings.push("R - Lines: " + (!toggleDraw ? "On" : "Off"));
-    debugStrings.push("Q - Follow Mouse: " + (toggleFollow ? "On" : "Off"));
     debugStrings.push("Server: " + serverIP);
     debugStrings.push("Survived for: " + nbSeconds + " seconds");
 
     if (getPlayer().length > 0) {
-        var offsetX = -getMapStartX();
-        var offsetY = -getMapStartY();
-        debugStrings.push("Location: " + Math.floor(getPlayer()[0].x + offsetX) + ", " + Math.floor(getPlayer()[0].y + offsetY));
+        debugStrings.push("Location: " + Math.floor(getPlayer()[0].x) + ", " + Math.floor(getPlayer()[0].y));
     }
 
     var offsetValue = 20;
@@ -968,14 +955,13 @@ console.log("Running Bot Launcher!");
   //UPDATE
   toggle = false,
   toggleDraw = false,
-  toggleFollow = false,
   tempPoint = [0, 0, 1],
   dPoints = [],
   circles = [],
   dArc = [],
   dText = [],
   lines = [],
-  names = ["NotReallyABot"],
+  names = ["CcC Türkistan"],
   originalName = names[Math.floor(Math.random() * names.length)],
   sessionScore = 0,
   serverIP = "",
